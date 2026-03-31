@@ -1,0 +1,60 @@
+<div class="container mt-5">
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <!-- Card com sombra -->
+      <div class="card shadow">
+        
+        <!-- Cabeçalho -->
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Cadastrar Cliente</h5>
+        </div>
+
+        <!-- Corpo -->
+        <div class="card-body">
+
+          <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input 
+                type="text" 
+                formControlName="nome"
+                class="form-control" 
+                id="nome" 
+                placeholder="Digite o nome do cliente">
+            </div>
+
+            <!-- CPF -->
+            <div class="mb-3">
+              <label for="cpf" class="form-label">CPF</label>
+              <input 
+                type="text" 
+                formControlName="cpf"
+                class="form-control" 
+                id="cpf" 
+                placeholder="Digite o CPF">
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-end">
+              <button type="reset" class="btn btn-secondary me-2">
+                Limpar
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Cadastrar
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

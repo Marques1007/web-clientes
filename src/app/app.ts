@@ -1,12 +1,17 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component} from '@angular/core';
+import { Navbar } from './components/navbar/navbar';
+import { CadastrarCliente } from './components/cadastrar-cliente/cadastrar-cliente';
 
+/* para importar ctrl+. */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    Navbar,
+    CadastrarCliente
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('web-clientes');
+
 }

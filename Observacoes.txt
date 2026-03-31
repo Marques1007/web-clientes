@@ -1,0 +1,174 @@
+hoje começa Angular na aula 3turma:
+instalar esses links para trabalhar no frontend
+next next next
+
+https://nodejs.org/en/download
+
+https://code.visualstudio.com/
+
+https://gitforwindows.org/
+
+tudo isso acima são instaladores
+
+entrar na pasta do angular
+(bd) git bash here
+node -v para ver a versão executar o dowload para atualizar
+npm -v ver versão
+npm install -g npm para atualizar o npm
+npm -v
+
+instalar o angular:
+npm install -g @angular/cli
+ng versio ver a versão do angular instalada
+
+agora tudo pronto para criar projetos frontend
+
+ng new web-clientes
+
+se o angular perguntar qualquer coisa antes da tela CSS...
+responder yes
+
+dar enter em cima de CSS em azul
+do you want to enable server-side rendering.... ? n
+wich AI none
+
+criar um repositorio no github para publicar o proejto
+repository 
+new
+web-clientes mesmo nome do proejto da pasta angular
+
+voltar para o terminal
+cd web-clientes
+copiar lá no github a linha
+git remote add origin https://github.com/Marques1007/web-clientes.git
+colar no terminal e executar
+inteligando com o que está na máquina lá no git
+para enviar para o github executar o comando
+git push origin master
+
+abrir o projeto no vscode.
+code . no terminal
+confiar nos autores
+instalar extensões
+file/reference/extensions
+angular language service
+dracula theme official
+material icon theme
+
+para executar o projeto angular do jeito que está
+ng s -o
+roda o projeto e já abre o navegador porta 4200 padrão angular
+responder y
+
+verificar no vscode se está salvando automaticamente
+app.html pagina incial do angular
+
+dar ctrl+c para parar o terminal sempre quando for criar alguma coisa
+no terminal para criar a pasta no vscode
+ng g c components/navbar --skip-tests não cria arquivo de teste
+criou 3 arquivos na pasta navbar
+ng g c components/cadastrar-clientes --skip-tests
+ng s -o executar novamente a pagina
+entrar no app.ts
+apagar protected .....
+apagar RouterOutlet deixar só os colchetes
+apagar o import do RouterOutlet
+apagar em signal component
+/* para importar ctrl+. */ vs code
+imports: [
+    Navbar,
+    CadastrarClientes
+  ],
+ agora pode colocar no arquivo app.html para colocar no
+codigo o conteudo dos arquivos acima
+
+apos alterar o nome da pasta cadastrar-clientes para 
+cadastrar-cliente tem que trocar no arquivo app.ts também
+mudar os importa para o novo nome.
+
+bootstrap para desenolver css responsivo para paginas web
+
+instalar o bootstrap no projeto:
+parar o terminal
+npm install --save bootstrap
+
+entrar no vs angular.json linha 29
+estava "src/styles.css"
+acrescentar 
+"src/styles.css",
+"node_modules/bootstrap/dist/css/bootstrap.min.css"
+executar novamente o projeto 
+ng s -o no terminal
+
+perguntar ao chatgpt
+Preciso escrever um componente navbar em uma página html de um projeto angular.
+Eu estou em um projeto angular usando bootstrap e preciso que o navbar tenha o nome do projeto “WebClientes” e exiba o nome do usuário autenticado no sistema e uma opção de sair. Crie o navbar com a cor azul primária do bootstrap e um efeito de sombra.
+Nesta página HTML não use nenhum diretiva d angular pois eu ainda estou bem no inicio do desenvolvimento do projeto.
+
+colar o resultado em navbar.html
+criou o cabeçalho da página 
+
+olhar essa página do bootstrap
+https://getbootstrap.com/docs/5.3/components/navbar/
+
+consultar:
+w3schools.com/bootstrap5/index.php
+themeforest.net/search/angular%20admin?...
+startbootstrap.com/theme/sd-admin-2
+
+perguntar ao chatgpt
+
+Preciso escrever um componente cadastrar-cliente em uma página html de um projeto angular.
+Eu estou em um projeto angular usando bootstrap e preciso que a página exiba um formulário com os campos nome e cpf para preenchimento. Faça o formulário dentro de um card e com sombra.
+
+ir para o intellig
+criar a classe corsconfiguration.java
+para determinar as autorizações para o angular acessar a API
+(bd)configurations new java class CorsConfiguration
+
+executar o projeto no intellig
+http://localhost:8080/swagger-ui/index.html
+para testar e cadastrar try out
+
+agora vamos ligar o angular pra fazer esse cadastro
+
+inserir no arquivo app.config.ts
+providerrouter....,
+provideHttpClient() --> colocar isso
+
+ir no cadastrar-cliente.ts
+inserir para capturar os formulários:
+imports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  
+começar a desenvolver a classe do formulario
+ligar a pagina cadastrar-cliente.html com esse codigo cadastrar-clientets
+no html colocar na linha 17
+estava apenas <form> mudar para
+<form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+
+colocar na linha 24
+              <input 
+                type="text" 
+                formControlName="nome" --> indicando o campo que vai receber
+                class="form-control" 
+                id="nome" 
+                placeholder="Digite o nome do cliente">
+
+              <input 
+                type="text" 
+                formControlName="cpf"
+                class="form-control" 
+                id="cpf" 
+                placeholder="Digite o CPF">
+
+vamoe enviar para o backend gravar no banco
+entrar no cadastrar-cliente.ts
+export class CadastrarCliente {
+
+  //instanciar a biblioteca httpclient
+  http = inject(HttpCliente);
+  
+ctrl+. -->angular/core importar inject
