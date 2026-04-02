@@ -172,3 +172,10 @@ export class CadastrarCliente {
   http = inject(HttpCliente);
   
 ctrl+. -->angular/core importar inject
+
+importar HttpParams ---> angular/common/...
+
+subir a aplicação 
+git add .
+git commit -m 'integracao com a API para cadastro de clientes'
+git push origin master

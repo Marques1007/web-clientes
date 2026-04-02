@@ -31,16 +31,30 @@ export class CadastrarCliente {
   //console.log(this.formulario.value);
 
 
-    //capturando os dados do formulário
-    const params = new HttpParams()
-      .set('nome', this.formulario.value.nome!) //capturando o campo nome do formulário
-      .set('cpf', this.formulario.value.cpf!);  //capturando o campo cpf do formulário
+       //capturando os dados do formulário
+    const request = { //JSON
+      nome:  this.formulario.value.nome!, //capturando o campo nome do formulário
+      cpf: this.formulario.value.cpf!  //capturando o campo cpf do formulário
+    }
 
     //enviando os dados para o backend
-    this.http.post('http://localhost:8080/api/cliente/criar', null, { params: params, responseType: 'text' })
-      .subscribe((resposta) => { //aguardando o retorno da API
-        console.log(resposta);
+    this.http.post('http://localhost:8080/api/cliente/criar', request, { responseType: 'text' })
+//      .subscribe((resposta) => { //aguardando o retorno da API
+//        console.log(resposta);      });
+
+      .subscribe({
+
+        next: (resposta) => { //sucesso
+
+          alert(resposta);
+          this.formulario.reset();
+
+        },
+        error: (e) => {  //capturando a resposta de erro
+
+          alert('erro: ' + e.error);
+
+        }
       });
   }
-
 }
