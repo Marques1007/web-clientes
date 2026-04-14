@@ -179,3 +179,10 @@ subir a aplicação
 git add .
 git commit -m 'integracao com a API para cadastro de clientes'
 git push origin master
+
+---------------------------------------------
+13/04/2026
+abrir o angular web-clientes 3turma git bash here
+npm install
+code .
+ng s -o (abrir o projeto no navageador)

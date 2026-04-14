@@ -1,13 +1,13 @@
 import { Component} from '@angular/core';
 import { Navbar } from './components/navbar/navbar';
-import { CadastrarCliente } from './components/cadastrar-cliente/cadastrar-cliente';
+import { RouterOutlet } from '@angular/router';
 
 /* para importar ctrl+. */
 @Component({
   selector: 'app-root',
   imports: [
     Navbar,
-    CadastrarCliente
+    RouterOutlet //permitir fazer a troca na navegacao dos componentes - efeito SPA
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
