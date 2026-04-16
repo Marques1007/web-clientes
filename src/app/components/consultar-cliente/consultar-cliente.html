@@ -17,33 +17,104 @@
           <form [formGroup]="formulario" (ngSubmit)="consultar()">
 
             <div class="row mb-3">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <input type="text" class="form-control" formControlName="nome" 
-                  placeholder="Digite o nome do cliente desejado"/>
+                  placeholder="Digite parte do cliente desejado"/> 
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
+                <!-- submit é sempre para formulário -->
                 <input type="submit" class="btn btn-success" value="Pesquisar clientes"
                   [disabled]="formulario.invalid"/>
               </div>
+<!--              <div class="col-md-5">
+                <input  type="radio"  formControlName="status"  [ariaValueText] class="col-md-1"/>Ativo    
+                <input type="radio" formControlName="status" [ariaValueText] class="col-md-1"/>Inativo    
+                <input type="radio" formControlName="status" [ariaValueText] class="col-md-1"/>Todos    
+              </div> -->
             </div>
 
           </form>
 
+         @if(mensagemSucesso() != '') { <!-- != diferente -->
 
-          <!-- Tabela -->
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Sucesso!</strong> {{ mensagemSucesso() }}
+<!--  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+  <button type="button" class="btn-close" (click)="mensagemSucesso.set('')"  aria-label="Close"></button>
+</div>
+
+          }
+
+          @if(mensagemErro() != '') {
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erro!</strong>  {{ mensagemErro() }}
+  <button type="button" class="btn-close" (click)="mensagemErro.set('')" aria-label="Close"></button>
+</div>
+
+          }
+
+
+
+
+          @if(clientes().length > 0) {
+
+         <!-- Tabela -->
           <div class="table-responsive">
             <table class="table table-sm table-striped table-hover align-middle">
               
               <thead>
                 <tr>
                   <th>Nome do Cliente</th>
-                  <th>Email</th>
-                  <th class="text-center" style="width: 180px;">Ações</th>
+                  <th>CPF</th>
+                  <th width="50%">Enderecos</th>
+                  <th class="text-lefth" style="width: 180px;">Ações</th>
                 </tr>
               </thead>
 
               <tbody>
-                <!-- Exemplo de linha (Angular depois pode usar *ngFor) -->
+
+                @for (c of clientes(); track c.id) {
+                    <tr>
+                        <td>{{ c.nome }}</td>                            
+                        <td>{{ c.cpf }}</td>   
+                        <td>
+
+                            @if(c.enderecos.length == 0) 
+                            {
+                                <div>......SEM ENDERECO........</div>
+                            }
+
+                            @for(e of c.enderecos; track e.id) 
+                            {
+
+                                <div>
+                                    {{e.logradouro }},
+                                    {{e.numero }},
+                                    {{e.complemento }},
+                                    {{e.bairro }},
+                                    {{e.cidade }},
+                                    {{e.uf }},
+                                    {{e.cep }}
+                                </div>
+                            }
+                        </td>                         
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">Editar</button>
+                            <button class="btn btn-sm btn-outline-danger me-1" (click)="excluir(c.id)">
+                                Excluir
+                            </button>
+                        </td>                        
+                    </tr>
+                }
+
+
+              </tbody>  
+
+
+
+<!--              <tbody>
+                 Exemplo de linha (Angular depois pode usar *ngFor) 
                 <tr>
                   <td>João da Silva</td>
                   <td>joao@email.com</td>
@@ -71,9 +142,12 @@
                 </tr>
 
               </tbody>
+-->
 
             </table>
           </div>
+
+          }
 
         </div>
 

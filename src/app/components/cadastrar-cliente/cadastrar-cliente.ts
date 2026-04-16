@@ -1,27 +1,34 @@
 
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { LOCATION_UPGRADE_CONFIGURATION } from '@angular/common/upgrade';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastrar-cliente',
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule // para utilozar o signals
   ],
   templateUrl: './cadastrar-cliente.html',
   styleUrl: './cadastrar-cliente.css',
 })
 export class CadastrarCliente {
 
+  //declarar 2 atributos
+  mensagemSucesso = signal<string>('');
+  mensagemErro = signal<string>('');
+
   //instanciando a bilbioteca HttpClient
+  //para fazer chamadas das APIs
   http = inject(HttpClient);
 
   //criando um formulário para capturar os campos
   formulario = new FormGroup({
-      nome : new FormControl('',[Validators.required]), //campo
-      cpf : new FormControl('',[Validators.required]),       //campo
+      nome : new FormControl('',[Validators.required,Validators.minLength(6)]), //campo
+      cpf : new FormControl('',[Validators.required,Validators.minLength(11),Validators.maxLength(11)]),       //campo
       logradouro : new FormControl('',[Validators.required]),
      numero : new FormControl('',[Validators.required]),
       complemento : new FormControl('',[Validators.required]),
@@ -31,9 +38,39 @@ export class CadastrarCliente {
       cep : new FormControl('',[Validators.required])
     });
 
+
+buscarCep() {
+  //capturar o valor preenchido no campo do CEP do formulario
+  const cep = this.formulario.get('cep')?.value;
+  // verificar se o campo tem no minimo 8 caractares preenchidos
+  if(cep?.length != 8) return; //finalizo a funcao
+
+  //consultando o cep na API viacep
+  this.http.get("https://viacep.com.br/ws/" + cep + "/json")
+  .subscribe((data: any) => {
+    //verifica se retornou erro
+    if (data.erro) return; //finaliza a funcao
+
+    //preencher o formulario com os dados obtidos do endereco
+    this.formulario.patchValue({
+      logradouro: data.logradouro,
+      complemento: data.complemento,
+      bairro: data.bairro,
+      cidade: data.localidade,
+      uf: data.uf
+    });
+
+  });
+  
+}
+
   //função chamada quando o formulário for submetido
   cadastrar() {
     
+
+    //limpar as mensagens
+    this.mensagemSucesso.set('');
+    this.mensagemErro.set('');
 
 //para jogar no console para testar inicialmente antes de jogar para o backend
   //console.log(this.formulario.value);
@@ -66,13 +103,18 @@ export class CadastrarCliente {
 
         next: (resposta) => { //sucesso
 
-          alert(resposta);
+          // retirando o alert e utilizar a biblioteca signals
+          // alert(resposta);
+          this.mensagemSucesso.set(resposta); //exibindo a mensagem de sucesso
+
           this.formulario.reset();
 
         },
         error: (e) => {  //capturando a resposta de erro
 
-          alert('erro: ' + e.error);
+          // retirando o alert e utilizar a biblioteca signals
+          // alert('erro: ' + e.error);
+          this.mensagemErro.set(e.error); //exibindo a mensagem de sucesso
 
         }
       });

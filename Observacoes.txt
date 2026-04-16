@@ -186,3 +186,88 @@ abrir o angular web-clientes 3turma git bash here
 npm install
 code .
 ng s -o (abrir o projeto no navageador)
+criar novo componente no vscode antes dar ctrl+c
+ng g c(generate component)
+ng g c components/consultar-cliente --skip-tests
+--skip-tests é para não criar as pastas desnecessárias
+depois que cria o compente novo roda novamente
+ng s -o
+
+no chatgpt digitar
+
+vou colar abaixo o codigo de uma pagina html que esta usando bootstrap 
+em um projeto angular, preciso que retire desta navbar 
+o nome do usuario joao e o botao sair e adicione 
+2 links de navegacao Cadastrar Cliente e Consultar Cliente 
+os links por enquanto sem apontar para nenhuma pagina
+
+mapear a rota no arquivo app.routes.ts
+path: 'pages/cadastrar-cliente'
+navbar.ts
+imports: [
+    RouterLink
+  ],
+ na navbar.html
+routerLink="/pages/cadastrar-cliente"
+
+app.ts
+  imports: [
+    Navbar,
+    RouterOutlet //permitir fazer a troca na navegacao dos componentes - efeito SPA
+  ],
+app.html
+<div>
+        <!-- Componente CadastrarCliente -->
+        <router-outlet/>
+    </div>
+pesquisar no chatgpt
+
+Vou colar abaixo o código html de uma página que estu desenhando em angular com bootstrap para cadastro de cliente.
+Preciso que você adicione nesta página o seguinte:
+Campo para preencher o cep, logradouro, numero, complemento, bairro, cidade, estado e uf (liste as UFs do brasil)
+Melhore a distribuição dos campos do formulário em linhas e colunas.
+Apenas me de o codigo HTML e não implemente nada de typescript
+
+--------------------------------
+na receita pesquisei isso API para validar dn CPF
+APIs com validação explícita por CPF + nascimento
+
+
+Exemplo direto:
+
+SintegraWS
+GET https://www.sintegraws.com.br/api/v1/execute-api.php
+  ?token=SEU_TOKEN
+  &cpf=00000000000
+  &data-nascimento=ddmmaaaa
+  &plugin=CPF
+--------------------------------
+
+chatgpt
+Agora, faça no mesmo modelo desta pagina de cadastro, uma página para consultar clientes em angular com bootstrap.
+A página deverá exibir uma tabela com as colunas: Nome do cliente, email e ações (editar e excluir)
+Não precisa exibir endereço
+Não implemente nada de typescript
+---------------
+cadastrar cliente . ts
+  formulario = new FormGroup({
+      nome : new FormControl('',[Validators.required]), //campo
+      cpf : new FormControl('',[Validators.required]),       //campo
+      logradouro : new FormControl('',[Validators.required]),
+     numero : new FormControl('',[Validators.required]),
+      comlemento : new FormControl(''),
+      cbairro : new FormControl('',[Validators.required]),
+      cidade : new FormControl('',[Validators.required]),
+      uf : new FormControl('',[Validators.required]),
+      cep : new FormControl('',[Validators.required])
+    });
+---------------
+git add .
+git commit -m 'criacao de componentes.....'
+git push origin master (no angular é master no java é main)
+--------------------------------
+15/04/2026
+para instaalar o jdk
+https://drive.google.com/drive/folders/11droq0zMylbcjgZ6Xau_VfJMA2FXKSQR?usp=drive_link
+
+

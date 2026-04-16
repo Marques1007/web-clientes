@@ -13,6 +13,25 @@
         <!-- Corpo -->
         <div class="card-body">
 
+          @if(mensagemSucesso() != '') { <!-- != diferente -->
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Sucesso!</strong> {{ mensagemSucesso() }}
+<!--  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+  <button type="button" class="btn-close" (click)="mensagemSucesso.set('')"  aria-label="Close"></button>
+</div>
+
+          }
+
+          @if(mensagemErro() != '') {
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erro!</strong>  {{ mensagemErro() }}
+  <button type="button" class="btn-close" (click)="mensagemErro.set('')" aria-label="Close"></button>
+</div>
+
+          }
+
           <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
 
 <!--            <div class="text-danger mb-2">  tudo em vermelho --> 
@@ -40,6 +59,7 @@
                   formControlName="cpf"
                   class="form-control" 
                   id="cpf" 
+                  maxlength="11"
                   placeholder="Digite o CPF">
               </div>
             </div>
@@ -52,7 +72,8 @@
             <div class="row mb-3">
               <div class="col-md-3">
                 <label class="form-label">CEP</label>
-                <input type="text" formControlName="cep" class="form-control" placeholder="00000-000">
+<!--                <input type="text" formControlName="cep" class="form-control" placeholder="00000-000"> -->
+                <input type="text" formControlName="cep" class="form-control" maxlength="8" (keyup)="buscarCep()"/>
               </div>
 
               <div class="col-md-9">
